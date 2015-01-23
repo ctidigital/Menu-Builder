@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cti_Menubuilder>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Cti_Menubuilder>
+    </modules>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cti_Menubuilder>
+            <version>2.0.0</version>
+        </Cti_Menubuilder>
+    </modules>
+</config>
