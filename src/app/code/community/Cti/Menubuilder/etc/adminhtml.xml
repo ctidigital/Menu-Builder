@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <cms>
+                        <children>
+                            <cti_menubuilder translate="title" module="cti_menubuilder">
+                                <title>Menu Builder</title>
+                                <sort_order>20</sort_order>
+                            </cti_menubuilder>
+                        </children>
+                    </cms>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <cms>
+            <children>
+                <cti_menubuilder translate="title" module="cti_menubuilder">
+                    <title>Menu Builder</title>
+                    <sort_order>50</sort_order>
+                    <action>adminhtml/menubuilder/manage</action>
+                </cti_menubuilder>
+            </children>
+        </cms>
+    </menu>
+</config>

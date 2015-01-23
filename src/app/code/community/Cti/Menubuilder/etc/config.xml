@@ -1,8 +1,52 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * PHP version 5
+ *
+ * @category Cti
+ * @package Cti_Menubuilder
+ * @author  Paul Partington <p.partington@ctidigital.com>
+ * @copyright 2015 CTI Digital (http://www.ctidigital.com)
+ * @license   http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link      http://www.ctidigital.com
+ */
+-->
 <config>
     <modules>
         <Cti_Menubuilder>
             <version>2.0.0</version>
         </Cti_Menubuilder>
     </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Cti_Menubuilder before="Mage_Adminhtml">Cti_Menubuilder_Adminhtml</Cti_Menubuilder>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <cti_menubuilder>
+                    <file>cti/cti_menubuilder.xml</file>
+                </cti_menubuilder>
+            </updates>
+        </layout>
+    </adminhtml>
+    <global>
+        <blocks>
+            <cti_menubuilder>
+                <class>Cti_Menubuilder_Block</class>
+            </cti_menubuilder>
+        </blocks>
+        <helpers>
+            <cti_menubuilder>
+                <class>Cti_Menubuilder_Helper</class>
+            </cti_menubuilder>
+        </helpers>
+    </global>
 </config>

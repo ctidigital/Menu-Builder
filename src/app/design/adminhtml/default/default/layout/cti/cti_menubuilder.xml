@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PHP version 5
+ *
+ * @category Cti
+ * @package Cti_Menubuilder
+ * @author  Paul Partington <p.partington@ctidigital.com>
+ * @copyright 2015 CTI Digital (http://www.ctidigital.com)
+ * @license   http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link      http://www.ctidigital.com
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_menubuilder_manage>
+        <reference name="content">
+            <block type="cti_menubuilder/adminhtml_manage" name="cti_menubuilder.manage" />
+        </reference>
+    </adminhtml_menubuilder_manage>
+</layout>
