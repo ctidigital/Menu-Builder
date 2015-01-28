@@ -3,9 +3,9 @@
 /**
  * PHP version 5
  *
- * @category Cti
- * @package Cti_Menubuilder
- * @author  Paul Partington <p.partington@ctidigital.com>
+ * @category  Cti
+ * @package   Cti_Menubuilder
+ * @author    Paul Partington <p.partington@ctidigital.com>
  * @copyright 2015 CTI Digital (http://www.ctidigital.com)
  * @license   http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link      http://www.ctidigital.com
@@ -14,7 +14,7 @@
 <config>
     <modules>
         <Cti_Menubuilder>
-            <version>2.0.0</version>
+            <version>1.0.0</version>
         </Cti_Menubuilder>
     </modules>
     <admin>
@@ -48,5 +48,40 @@
                 <class>Cti_Menubuilder_Helper</class>
             </cti_menubuilder>
         </helpers>
+        <models>
+            <cti_menubuilder>
+                <class>Cti_Menubuilder_Model</class>
+                <resourceModel>cti_menubuilder_resource</resourceModel>
+            </cti_menubuilder>
+            <cti_menubuilder_resource>
+                <class>Cti_Menubuilder_Model_Resource</class>
+                <entities>
+                    <menu>
+                        <table>cti_menubuilder_menu</table>
+                    </menu>
+                    <menu_store>
+                        <table>cti_menubuilder_menu_store</table>
+                    </menu_store>
+                </entities>
+            </cti_menubuilder_resource>
+        </models>
+        <resources>
+            <cti_menubuilder_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </cti_menubuilder_read>
+            <cti_menubuilder_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </cti_menubuilder_write>
+            <cti_menubuilder_setup>
+                <setup>
+                    <module>Cti_Menubuilder</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </cti_menubuilder_setup>
+        </resources>
     </global>
 </config>
