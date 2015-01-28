@@ -46,4 +46,25 @@ class Cti_Menubuilder_Adminhtml_MenubuilderController extends
         $this->loadLayout();
         $this->renderLayout();
     }
+
+    /**
+     * Forward the request to the edit action
+     *
+     * @return null
+     */
+    public function newAction ()
+    {
+        $this->_forward('edit');
+    }
+
+    /**
+     * Edit menus
+     *
+     * @return null
+     */
+    public function editAction ()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
 }
