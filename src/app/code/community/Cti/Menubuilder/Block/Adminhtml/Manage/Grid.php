@@ -50,6 +50,17 @@ class Cti_Menubuilder_Block_Adminhtml_Manage_Grid extends
     }
 
     /**
+     * Calls the _afterLoad function of the resource models
+     *
+     * @return $this
+     */
+    protected function _afterLoadCollection ()
+    {
+        $this->getCollection()->walk('afterLoad');
+        return parent::_afterLoadCollection();
+    }
+
+    /**
      * Set up the grid columns
      *
      * @return Mage_Adminhtml_Block_Widget_Grid
@@ -78,6 +89,35 @@ class Cti_Menubuilder_Block_Adminhtml_Manage_Grid extends
             )
         );
 
+        $this->addColumn(
+            'store_id', array(
+                'header'                    =>
+                    Mage::helper('cti_menubuilder')->__('Stores'),
+                'index'                     => 'stores',
+                'type'                      => 'store',
+                'store_all'                 => true,
+                'store_view'                => true,
+                'filter_condition_callback' => array ($this, 'filterStoreCondition')
+            )
+        );
+
         return parent::_prepareColumns();
+    }
+
+    /**
+     * Apply the store filter to the collection
+     *
+     * @param object $collection the menu collection
+     * @param object $column     the column being edited
+     *
+     * @return bool
+     */
+    protected function filterStoreCondition ($collection, $column)
+    {
+        if (!$value = $column->getFilter()->getValue()) {
+            return false;
+        }
+        $collection->addStoreFilter($value);
+        return true;
     }
 }
