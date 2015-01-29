@@ -20,7 +20,7 @@
 
     DragAndDropHandler.prototype.mouseCapture = function(position_info) {
       var $element, node_element;
-      $element = $(position_info.target);
+      $element = jQuery(position_info.target);
       if (!this.mustCaptureElement($element)) {
         return null;
       }
@@ -40,7 +40,7 @@
     DragAndDropHandler.prototype.mouseStart = function(position_info) {
       var offset;
       this.refresh();
-      offset = $(position_info.target).offset();
+      offset = jQuery(position_info.target).offset();
       this.drag_element = new DragElement(this.current_item.node, position_info.page_x - offset.left, position_info.page_y - offset.top, this.tree_widget.element);
       this.is_dragging = true;
       this.current_item.$element.addClass('jqtree-moving');
@@ -259,7 +259,7 @@
           var $element, child, children_length, i, must_iterate_inside, _i, _len, _ref;
           must_iterate_inside = (node.is_open || !node.element) && node.hasChildren();
           if (node.element) {
-            $element = $(node.element);
+            $element = jQuery(node.element);
             if (!$element.is(':visible')) {
               return;
             }
@@ -382,7 +382,7 @@
 
     HitAreasGenerator.prototype.handleFirstNode = function(node, $element) {
       if (node !== this.current_node) {
-        return this.addPosition(node, Position.BEFORE, this.getTop($(node.element)));
+        return this.addPosition(node, Position.BEFORE, this.getTop(jQuery(node.element)));
       }
     };
 
@@ -442,7 +442,7 @@
     function DragElement(node, offset_x, offset_y, $tree) {
       this.offset_x = offset_x;
       this.offset_y = offset_y;
-      this.$element = $("<span class=\"jqtree-title jqtree-dragging\">" + node.name + "</span>");
+      this.$element = jQuery("<span class=\"jqtree-title jqtree-dragging\">" + node.name + "</span>");
       this.$element.css("position", "absolute");
       $tree.append(this.$element);
     }
@@ -502,7 +502,7 @@
 
     ElementsRenderer.prototype.renderFromNode = function(node) {
       var $previous_li, li, parent_node_element;
-      $previous_li = $(node.element);
+      $previous_li = jQuery(node.element);
       parent_node_element = new NodeElement(node.parent, this.tree_widget);
       li = this.createLi(node);
       this.attachNodeData(node, li);
@@ -531,7 +531,7 @@
 
     ElementsRenderer.prototype.attachNodeData = function(node, li) {
       node.element = li;
-      return $(li).data('node', node);
+      return jQuery(li).data('node', node);
     };
 
     ElementsRenderer.prototype.createUl = function(is_root_node) {
@@ -554,7 +554,7 @@
         li = this.createNodeLi(node);
       }
       if (this.tree_widget.options.onCreateLi) {
-        this.tree_widget.options.onCreateLi(node, $(li));
+        this.tree_widget.options.onCreateLi(node, jQuery(li));
       }
       return li;
     };
@@ -644,7 +644,7 @@
         div.innerHTML = value;
         return document.createTextNode(div.innerHTML);
       } else {
-        return $(value)[0];
+        return jQuery(value)[0];
       }
     };
 
@@ -842,7 +842,7 @@ limitations under the License.
     };
 
     JqTreeWidget.prototype.loadDataFromUrl = function(url, parent_node, on_finished) {
-      if ($.type(url) !== 'string') {
+      if (jQuery.type(url) !== 'string') {
         on_finished = parent_node;
         parent_node = url;
         url = null;
@@ -860,7 +860,7 @@ limitations under the License.
       addLoadingClass = (function(_this) {
         return function() {
           if (parent_node) {
-            $el = $(parent_node.element);
+            $el = jQuery(parent_node.element);
           } else {
             $el = _this.element;
           }
@@ -873,7 +873,7 @@ limitations under the License.
         }
       };
       parseUrlInfo = function() {
-        if ($.type(url_info) === 'string') {
+        if (jQuery.type(url_info) === 'string') {
           url_info = {
             url: url_info
           };
@@ -886,7 +886,7 @@ limitations under the License.
         return function(data) {
           removeLoadingClass();
           _this._loadData(data, parent_node);
-          if (on_finished && $.isFunction(on_finished)) {
+          if (on_finished && jQuery.isFunction(on_finished)) {
             return on_finished();
           }
         };
@@ -894,7 +894,7 @@ limitations under the License.
       loadDataFromUrlInfo = (function(_this) {
         return function() {
           parseUrlInfo();
-          return $.ajax({
+          return jQuery.ajax({
             url: url_info.url,
             data: url_info.data,
             type: url_info.method.toUpperCase(),
@@ -902,10 +902,10 @@ limitations under the License.
             dataType: 'json',
             success: function(response) {
               var data;
-              if ($.isArray(response) || typeof response === 'object') {
+              if (jQuery.isArray(response) || typeof response === 'object') {
                 data = response;
               } else {
-                data = $.parseJSON(response);
+                data = jQuery.parseJSON(response);
               }
               if (_this.options.dataFilter) {
                 data = _this.options.dataFilter(data);
@@ -927,7 +927,7 @@ limitations under the License.
       addLoadingClass();
       if (!url_info) {
         removeLoadingClass();
-      } else if ($.isArray(url_info)) {
+      } else if (jQuery.isArray(url_info)) {
         handeLoadData(url_info);
       } else {
         return loadDataFromUrlInfo();
@@ -1161,7 +1161,7 @@ limitations under the License.
 
     JqTreeWidget.prototype.scrollToNode = function(node) {
       var $element, top;
-      $element = $(node.element);
+      $element = jQuery(node.element);
       top = $element.offset().top - this.$el.offset().top;
       return this.scroll_handler.scrollTo(top);
     };
@@ -1221,10 +1221,10 @@ limitations under the License.
         this.key_handler = new KeyHandler(this);
       }
       this._initData();
-      this.element.click($.proxy(this._click, this));
-      this.element.dblclick($.proxy(this._dblclick, this));
+      this.element.click(jQuery.proxy(this._click, this));
+      this.element.dblclick(jQuery.proxy(this._dblclick, this));
       if (this.options.useContextMenu) {
-        return this.element.bind('contextmenu', $.proxy(this._contextmenu, this));
+        return this.element.bind('contextmenu', jQuery.proxy(this._contextmenu, this));
       }
     };
 
@@ -1272,9 +1272,9 @@ limitations under the License.
           return url_info;
         };
       })(this);
-      if ($.isFunction(data_url)) {
+      if (jQuery.isFunction(data_url)) {
         return data_url(node);
-      } else if ($.type(data_url) === 'string') {
+      } else if (jQuery.type(data_url) === 'string') {
         return getUrlFromString();
       } else {
         return data_url;
@@ -1457,7 +1457,7 @@ limitations under the License.
 
     JqTreeWidget.prototype._getClickTarget = function(element) {
       var $button, $el, $target;
-      $target = $(element);
+      $target = jQuery(element);
       $button = $target.closest('.jqtree-toggler');
       if ($button.length) {
         node = this._getNode($button);
@@ -1511,7 +1511,7 @@ limitations under the License.
 
     JqTreeWidget.prototype._contextmenu = function(e) {
       var $div;
-      $div = $(e.target).closest('ul.jqtree-tree .jqtree-element');
+      $div = jQuery(e.target).closest('ul.jqtree-tree .jqtree-element');
       if ($div.length) {
         node = this._getNode($div);
         if (node) {
@@ -1571,8 +1571,8 @@ limitations under the License.
 
     JqTreeWidget.prototype._triggerEvent = function(event_name, values) {
       var event;
-      event = $.Event(event_name);
-      $.extend(event, values);
+      event = jQuery.Event(event_name);
+      jQuery.extend(event, values);
       this.element.trigger(event);
       return event;
     };
@@ -1628,12 +1628,12 @@ limitations under the License.
       this.selectNode = __bind(this.selectNode, this);
       this.tree_widget = tree_widget;
       if (tree_widget.options.keyboardSupport) {
-        $(document).bind('keydown.jqtree', $.proxy(this.handleKeyDown, this));
+        jQuery(document).bind('keydown.jqtree', jQuery.proxy(this.handleKeyDown, this));
       }
     }
 
     KeyHandler.prototype.deinit = function() {
-      return $(document).unbind('keydown.jqtree');
+      return jQuery(document).unbind('keydown.jqtree');
     };
 
     KeyHandler.prototype.moveDown = function() {
@@ -1683,7 +1683,7 @@ limitations under the License.
       if (!this.tree_widget.options.keyboardSupport) {
         return true;
       }
-      if ($(document.activeElement).is('textarea,input,select')) {
+      if (jQuery(document.activeElement).is('textarea,input,select')) {
         return true;
       }
       if (!this.tree_widget.getSelectedNode()) {
@@ -1708,7 +1708,7 @@ limitations under the License.
         return true;
       } else {
         this.tree_widget.selectNode(node);
-        if (this.tree_widget.scroll_handler && (!this.tree_widget.scroll_handler.isScrolledIntoView($(node.element).find('.jqtree-element')))) {
+        if (this.tree_widget.scroll_handler && (!this.tree_widget.scroll_handler.isScrolledIntoView(jQuery(node.element).find('.jqtree-element')))) {
           this.tree_widget.scrollToNode(node);
         }
         return false;
@@ -1746,8 +1746,8 @@ This widget does the same a the mouse widget in jqueryui.
     MouseWidget.is_mouse_handled = false;
 
     MouseWidget.prototype._init = function() {
-      this.$el.bind('mousedown.mousewidget', $.proxy(this._mouseDown, this));
-      this.$el.bind('touchstart.mousewidget', $.proxy(this._touchStart, this));
+      this.$el.bind('mousedown.mousewidget', jQuery.proxy(this._mouseDown, this));
+      this.$el.bind('touchstart.mousewidget', jQuery.proxy(this._touchStart, this));
       this.is_mouse_started = false;
       this.mouse_delay = 0;
       this._mouse_delay_timer = null;
@@ -1759,7 +1759,7 @@ This widget does the same a the mouse widget in jqueryui.
       var $document;
       this.$el.unbind('mousedown.mousewidget');
       this.$el.unbind('touchstart.mousewidget');
-      $document = $(document);
+      $document = jQuery(document);
       $document.unbind('mousemove.mousewidget');
       return $document.unbind('mouseup.mousewidget');
     };
@@ -1794,11 +1794,11 @@ This widget does the same a the mouse widget in jqueryui.
 
     MouseWidget.prototype._handleStartMouse = function() {
       var $document;
-      $document = $(document);
-      $document.bind('mousemove.mousewidget', $.proxy(this._mouseMove, this));
-      $document.bind('touchmove.mousewidget', $.proxy(this._touchMove, this));
-      $document.bind('mouseup.mousewidget', $.proxy(this._mouseUp, this));
-      $document.bind('touchend.mousewidget', $.proxy(this._touchEnd, this));
+      $document = jQuery(document);
+      $document.bind('mousemove.mousewidget', jQuery.proxy(this._mouseMove, this));
+      $document.bind('touchmove.mousewidget', jQuery.proxy(this._touchMove, this));
+      $document.bind('mouseup.mousewidget', jQuery.proxy(this._mouseUp, this));
+      $document.bind('touchend.mousewidget', jQuery.proxy(this._touchEnd, this));
       if (this.mouse_delay) {
         return this._startMouseDelayTimer();
       }
@@ -1852,7 +1852,7 @@ This widget does the same a the mouse widget in jqueryui.
 
     MouseWidget.prototype._handleMouseUp = function(position_info) {
       var $document;
-      $document = $(document);
+      $document = jQuery(document);
       $document.unbind('mousemove.mousewidget');
       $document.unbind('touchmove.mousewidget');
       $document.unbind('mouseup.mousewidget');
@@ -2102,7 +2102,7 @@ This widget does the same a the mouse widget in jqueryui.
      */
 
     Node.prototype.getChildIndex = function(node) {
-      return $.inArray(node, this.children);
+      return jQuery.inArray(node, this.children);
     };
 
 
@@ -2477,7 +2477,7 @@ This widget does the same a the mouse widget in jqueryui.
       if (!node.element) {
         node.element = this.tree_widget.element;
       }
-      return this.$element = $(node.element);
+      return this.$element = jQuery(node.element);
     };
 
     NodeElement.prototype.getUl = function() {
@@ -2599,7 +2599,7 @@ This widget does the same a the mouse widget in jqueryui.
       var $div, width;
       $div = $element.children('.jqtree-element');
       width = $element.width() - 4;
-      this.$hint = $('<span class="jqtree-border"></span>');
+      this.$hint = jQuery('<span class="jqtree-border"></span>');
       $div.append(this.$hint);
       this.$hint.css({
         width: width,
@@ -2619,7 +2619,7 @@ This widget does the same a the mouse widget in jqueryui.
     function GhostDropHint(node, $element, position) {
       this.$element = $element;
       this.node = node;
-      this.$ghost = $('<li class="jqtree_common jqtree-ghost"><span class="jqtree_common jqtree-circle"></span><span class="jqtree_common jqtree-line"></span></li>');
+      this.$ghost = jQuery('<li class="jqtree_common jqtree-ghost"><span class="jqtree_common jqtree-circle"></span><span class="jqtree_common jqtree-line"></span></li>');
       if (position === Position.AFTER) {
         this.moveAfter();
       } else if (position === Position.BEFORE) {
@@ -2646,7 +2646,7 @@ This widget does the same a the mouse widget in jqueryui.
     };
 
     GhostDropHint.prototype.moveInsideOpenFolder = function() {
-      return $(this.node.children[0].element).before(this.$ghost);
+      return jQuery(this.node.children[0].element).before(this.$ghost);
     };
 
     GhostDropHint.prototype.moveInside = function() {
@@ -2687,9 +2687,9 @@ This widget does the same a the mouse widget in jqueryui.
         return this.tree_widget.options.onSetStateFromStorage(state);
       } else if (this.supportsLocalStorage()) {
         return localStorage.setItem(this.getCookieName(), state);
-      } else if ($.cookie) {
-        $.cookie.raw = true;
-        return $.cookie(this.getCookieName(), state, {
+      } else if (jQuery.cookie) {
+        jQuery.cookie.raw = true;
+        return jQuery.cookie(this.getCookieName(), state, {
           path: '/'
         });
       }
@@ -2707,7 +2707,7 @@ This widget does the same a the mouse widget in jqueryui.
 
     SaveStateHandler.prototype._parseState = function(json_data) {
       var state;
-      state = $.parseJSON(json_data);
+      state = jQuery.parseJSON(json_data);
       if (state && state.selected_node && isInt(state.selected_node)) {
         state.selected_node = [state.selected_node];
       }
@@ -2719,9 +2719,9 @@ This widget does the same a the mouse widget in jqueryui.
         return this.tree_widget.options.onGetStateFromStorage();
       } else if (this.supportsLocalStorage()) {
         return localStorage.getItem(this.getCookieName());
-      } else if ($.cookie) {
-        $.cookie.raw = true;
-        return $.cookie(this.getCookieName());
+      } else if (jQuery.cookie) {
+        jQuery.cookie.raw = true;
+        return jQuery.cookie(this.getCookieName());
       } else {
         return null;
       }
@@ -2917,7 +2917,7 @@ This widget does the same a the mouse widget in jqueryui.
             var css_value, _i, _len, _ref;
             for (_i = 0, _len = css_values.length; _i < _len; _i++) {
               css_value = css_values[_i];
-              if ((_ref = $.css(el, css_value)) === 'auto' || _ref === 'scroll') {
+              if ((_ref = jQuery.css(el, css_value)) === 'auto' || _ref === 'scroll') {
                 return true;
               }
             }
@@ -2930,7 +2930,7 @@ This widget does the same a the mouse widget in jqueryui.
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             el = _ref[_i];
             if (hasOverFlow(el)) {
-              return $(el);
+              return jQuery(el);
             }
           }
           return null;
@@ -2983,11 +2983,11 @@ This widget does the same a the mouse widget in jqueryui.
 
     ScrollHandler.prototype._handleScrollingWithDocument = function(area) {
       var distance_top;
-      distance_top = area.top - $(document).scrollTop();
+      distance_top = area.top - jQuery(document).scrollTop();
       if (distance_top < 20) {
-        return $(document).scrollTop($(document).scrollTop() - 20);
-      } else if ($(window).height() - (area.bottom - $(document).scrollTop()) < 20) {
-        return $(document).scrollTop($(document).scrollTop() + 20);
+        return jQuery(document).scrollTop(jQuery(document).scrollTop() - 20);
+      } else if (jQuery(window).height() - (area.bottom - jQuery(document).scrollTop()) < 20) {
+        return jQuery(document).scrollTop(jQuery(document).scrollTop() + 20);
       }
     };
 
@@ -2997,21 +2997,21 @@ This widget does the same a the mouse widget in jqueryui.
         return this.$scroll_parent[0].scrollTop = top;
       } else {
         tree_top = this.tree_widget.$el.offset().top;
-        return $(document).scrollTop(top + tree_top);
+        return jQuery(document).scrollTop(top + tree_top);
       }
     };
 
     ScrollHandler.prototype.isScrolledIntoView = function(element) {
       var $element, element_bottom, element_top, view_bottom, view_top;
-      $element = $(element);
+      $element = jQuery(element);
       if (this.$scroll_parent) {
         view_top = 0;
         view_bottom = this.$scroll_parent.height();
         element_top = $element.offset().top - this.scroll_parent_top;
         element_bottom = element_top + $element.height();
       } else {
-        view_top = $(window).scrollTop();
-        view_bottom = view_top + $(window).height();
+        view_top = jQuery(window).scrollTop();
+        view_bottom = view_top + jQuery(window).height();
         element_top = $element.offset().top;
         element_bottom = element_top + $element.height();
       }
@@ -3027,7 +3027,7 @@ This widget does the same a the mouse widget in jqueryui.
 }).call(this);
 
 },{}],10:[function(require,module,exports){
-(function() {
+(function() {œ
   var SelectNodeHandler;
 
   SelectNodeHandler = (function() {
@@ -3160,8 +3160,8 @@ limitations under the License.
     SimpleWidget.prototype.defaults = {};
 
     function SimpleWidget(el, options) {
-      this.$el = $(el);
-      this.options = $.extend({}, this.defaults, options);
+      this.$el = jQuery(el);
+      this.options = jQuery.extend({}, this.defaults, options);
     }
 
     SimpleWidget.prototype.destroy = function() {
@@ -3183,7 +3183,7 @@ limitations under the License.
       };
       getWidgetData = function(el, data_key) {
         var widget;
-        widget = $.data(el, data_key);
+        widget = jQuery.data(el, data_key);
         if (widget && (widget instanceof SimpleWidget)) {
           return widget;
         } else {
@@ -3198,8 +3198,8 @@ limitations under the License.
           existing_widget = getWidgetData(el, data_key);
           if (!existing_widget) {
             widget = new widget_class(el, options);
-            if (!$.data(el, data_key)) {
-              $.data(el, data_key, widget);
+            if (!jQuery.data(el, data_key)) {
+              jQuery.data(el, data_key, widget);
             }
             widget._init();
           }
@@ -3216,7 +3216,7 @@ limitations under the License.
           if (widget) {
             widget.destroy();
           }
-          _results.push($.removeData(el, data_key));
+          _results.push(jQuery.removeData(el, data_key));
         }
         return _results;
       };
@@ -3225,7 +3225,7 @@ limitations under the License.
         result = null;
         for (_i = 0, _len = $el.length; _i < _len; _i++) {
           el = $el[_i];
-          widget = $.data(el, getDataKey());
+          widget = jQuery.data(el, getDataKey());
           if (widget && (widget instanceof SimpleWidget)) {
             widget_function = widget[function_name];
             if (widget_function && (typeof widget_function === 'function')) {
@@ -3235,7 +3235,7 @@ limitations under the License.
         }
         return result;
       };
-      return $.fn[widget_name] = function() {
+      return jQuery.fn[widget_name] = function() {
         var $el, args, argument1, function_name, options;
         argument1 = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
         $el = this;
