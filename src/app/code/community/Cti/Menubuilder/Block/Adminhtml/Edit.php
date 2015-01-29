@@ -43,7 +43,7 @@ class Cti_Menubuilder_Block_Adminhtml_Edit extends
      */
     public function getHeaderText ()
     {
-        if (Mage::registry('cti_menubuilder_menu')->getId()) {
+        if (Mage::registry('cti_menubuilder_menu')->getMenuId()) {
             return Mage::helper('cti_menubuilder')->__(
                 'Edit menu %s',
                 $this->escapeHtml(
@@ -78,6 +78,9 @@ class Cti_Menubuilder_Block_Adminhtml_Edit extends
 
     public function getMenuCreator ()
     {
-        return $this->getChildHtml('cti_menubuilder.edit.menu');
+        if (Mage::registry('cti_menubuilder_menu')->getMenuId()) {
+            return $this->getChildHtml('cti_menubuilder.edit.menu');
+        }
+        return false;
     }
 }

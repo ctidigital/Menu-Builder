@@ -132,8 +132,8 @@ try {
             Varien_Db_Ddl_Table::TYPE_INTEGER,
             null,
             array(
-                'unsigned',
-                'nullable',
+                'unsigned'  => true,
+                'nullable'  => false,
             ),
             'Menu ID'
         )->addColumn(
@@ -142,6 +142,33 @@ try {
             255,
             array(),
             'Item Name'
+        )->addColumn(
+            'level',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned'  => true,
+                'nullable'  => false,
+            ),
+            'Item Level'
+        )->addColumn(
+            'position',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned'  => true,
+                'nullable'  => false,
+            ),
+            'Item Position'
+        )->addColumn(
+            'parent_id',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned'  => true,
+                'nullable'  => false,
+            ),
+            'Parent ID'
         );
 
     $installer->getConnection()->createTable($table);

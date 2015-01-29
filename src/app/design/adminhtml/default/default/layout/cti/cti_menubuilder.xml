@@ -20,9 +20,10 @@
 
     <adminhtml_menubuilder_edit>
         <reference name="head">
-            <action method="addJs"><script>lib/jquery/jquery-1.10.2.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
             <action method="addJs"><script>cti/jqtree/tree.jquery.js</script></action>
             <action method="addJs"><script>cti/jquery/jquery.cookie-1.4.1.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
             <action method="addCss"><stylesheet>cti/cti_menubuilder/css/jqtree.css</stylesheet></action>
         </reference>
         <reference name="content">

@@ -150,27 +150,32 @@ class Cti_Menubuilder_Adminhtml_MenubuilderController extends
 
     public function getMenuItemsAction ()
     {
-        $json = array(
-            array(
-                'label' => 'Home Page',
-                'id'    => '1',
-            ),
-            array(
-                'label' => 'Categories',
-                'id'    => '2',
-                'children'  => array(
-                    array(
-                        'label' => 'Computers',
-                        'id'    => '3',
-                    ),
-                    array(
-                        'label' => 'MP3s',
-                        'id'    => '4',
-                    )
-                )
-            )
-        );
+        if ($menuId = $this->getRequest()->getParam('menu_id')) {
+            $menu = Mage::getModel('cti_menubuilder/menu')->load($menuId);
+        }
 
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($json));
+        $json = Mage::helper('cti_menubuilder')->convertMenuItemsToJson($menu);
+//        $json = array(
+//            array(
+//                'label' => 'Home Page',
+//                'id'    => '1',
+//            ),
+//            array(
+//                'label' => 'Categories',
+//                'id'    => '2',
+//                'children'  => array(
+//                    array(
+//                        'label' => 'Computers',
+//                        'id'    => '3',
+//                    ),
+//                    array(
+//                        'label' => 'MP3s',
+//                        'id'    => '4',
+//                    )
+//                )
+//            )
+//        );
+
+        $this->getResponse()->setBody($json);
     }
 }

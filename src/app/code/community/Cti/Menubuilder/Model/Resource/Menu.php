@@ -82,7 +82,7 @@ class Cti_Menubuilder_Model_Resource_Menu extends
     /**
      * Operations after the the object has been loaded
      *
-     * @param Mage_Core_Model_Abstract $object The menu that is being loaded
+     * @param Mage_Core_Model_Abstract $object the menu that is being loaded
      *
      * @return Mage_Core_Model_Resource_Db_Abstract
      */
@@ -92,6 +92,10 @@ class Cti_Menubuilder_Model_Resource_Menu extends
             // Get the store IDs the menu is assigned to
             $storeIds = $this->_lookupStoreIds($object->getId());
             $object->setData('stores', $storeIds);
+
+            // Get the item IDs that are associated to the menu
+            $items = $this->_lookupItems($object->getMenuId());
+            $object->setData('items', $items);
         }
         return parent::_afterLoad($object);
     }
@@ -99,7 +103,7 @@ class Cti_Menubuilder_Model_Resource_Menu extends
     /**
      * Look up the store IDs a menu is associated to using the menu ID
      *
-     * @param int $id The ID of the menu
+     * @param int $id the ID of the menu
      *
      * @return array
      */
@@ -116,5 +120,27 @@ class Cti_Menubuilder_Model_Resource_Menu extends
         );
 
         return $adapter->fetchCol($select, $binds);
+    }
+
+    /**
+     * Look up the items associated to a menu
+     *
+     * @param int $id the ID of the menu
+     *
+     * @return array
+     */
+    private function _lookupItems ($id)
+    {
+        $adapter = $this->_getReadAdapter();
+
+        $select = $adapter->select()
+            ->from($this->getTable('cti_menubuilder/menu_item'), '*')
+            ->where('menu_id = :menu_id');
+
+        $binds = array(
+            ':menu_id'  => (int) $id
+        );
+
+        return $adapter->fetchAll($select, $binds);
     }
 }
