@@ -17,4 +17,10 @@
             <block type="cti_menubuilder/adminhtml_manage" name="cti_menubuilder.manage" />
         </reference>
     </adminhtml_menubuilder_manage>
+
+    <adminhtml_menubuilder_edit>
+        <reference name="content">
+            <block type="cti_menubuilder/adminhtml_edit" name="cti_menubuilder.edit" />
+        </reference>
+    </adminhtml_menubuilder_edit>
 </layout>
