@@ -1,0 +1,33 @@
+<?php
+/**
+ * PHP version 5
+ *
+ * @category Cti
+ * @package Cti_Menubuilder
+ * @author Paul Partington <p.partington@ctidigital.com>
+ * @copyright 2015 CTI Digital (http://www.ctidigital.com)
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link http://www.ctidigital.com
+ */
+?>
+<?php
+/**
+ * @see Cti_Menubuilder_Block_Adminhtml_Edit
+ * @var $this Cti_Menubuilder_Block_Adminhtml_Edit
+ */
+?>
+<?php echo $this->getFormInitScripts() ?>
+<div class="content-header">
+    <?php echo $this->getHeaderHtml() ?>
+    <p class="form-buttons"><?php echo $this->getButtonsHtml('header') ?></p>
+</div>
+<?php echo $this->getFormHtml() ?>
+<?php if ($this->hasFooterButtons()): ?>
+    <div class="content-footer">
+        <p class="form-buttons"><?php echo $this->getButtonsHtml('footer') ?></p>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+    editForm = new varienForm('edit_form', '<?php echo $this->getValidationUrl() ?>');
+</script>
+<?php echo $this->getFormScripts() ?>

@@ -20,7 +20,9 @@
 
     <adminhtml_menubuilder_edit>
         <reference name="content">
-            <block type="cti_menubuilder/adminhtml_edit" name="cti_menubuilder.edit" />
+            <block type="cti_menubuilder/adminhtml_edit" name="cti_menubuilder.edit">
+                <action method="setTemplate"><template>cti/cti_menubuilder/widget/form/container.phtml</template></action>
+            </block>
         </reference>
     </adminhtml_menubuilder_edit>
 </layout>
