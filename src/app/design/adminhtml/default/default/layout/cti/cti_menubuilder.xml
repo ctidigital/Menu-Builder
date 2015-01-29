@@ -19,9 +19,16 @@
     </adminhtml_menubuilder_manage>
 
     <adminhtml_menubuilder_edit>
+        <reference name="head">
+            <action method="addJs"><script>lib/jquery/jquery-1.10.2.js</script></action>
+            <action method="addJs"><script>cti/jqtree/tree.jquery.js</script></action>
+            <action method="addJs"><script>cti/jquery/jquery.cookie-1.4.1.min.js</script></action>
+            <action method="addCss"><stylesheet>cti/cti_menubuilder/css/jqtree.css</stylesheet></action>
+        </reference>
         <reference name="content">
             <block type="cti_menubuilder/adminhtml_edit" name="cti_menubuilder.edit">
                 <action method="setTemplate"><template>cti/cti_menubuilder/widget/form/container.phtml</template></action>
+                <block type="cti_menubuilder/adminhtml_edit_menu" name="cti_menubuilder.edit.menu" template="cti/cti_menubuilder/widget/form/menu.phtml" />
             </block>
         </reference>
     </adminhtml_menubuilder_edit>

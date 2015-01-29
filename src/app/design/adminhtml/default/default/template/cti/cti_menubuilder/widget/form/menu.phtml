@@ -1,0 +1,31 @@
+<?php
+/**
+ * PHP version 5
+ *
+ * @category Cti
+ * @package Cti_Menubuilder
+ * @author Paul Partington <p.partington@ctidigital.com>
+ * @copyright 2015 CTI Digital
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link http://www.ctidigital.com
+ */
+?>
+<?php
+/**
+ * @var $this Cti_Menubuilder_Block_Adminhtml_Edit_Menu
+ * @see Cti_Menubuilder_Block_Adminhtml_Edit_Menu
+ */
+?>
+
+<div id="menubuilder_tree" data-url="<?php echo $this->getItemJsonUrl() ?>">
+
+</div>
+
+<script type="text/javascript">
+    jQuery(function() {
+       jQuery('#menubuilder_tree').tree({
+           dragAndDrop: true,
+           autoOpen: 0
+       });
+    });
+</script>

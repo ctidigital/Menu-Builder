@@ -4,3 +4,5 @@ src/app/code/community/Cti/Menubuilder app/code/community/Cti/Menubuilder
 src/app/design/adminhtml/default/default/layout/cti app/design/adminhtml/default/default/layout/cti
 src/app/design/adminhtml/default/default/template/cti app/design/adminhtml/default/default/template/cti
 src/app/etc/modules/Cti_Menubuilder.xml app/etc/modules/Cti_Menubuilder.xml
+src/js/cti js/cti
+src/skin/adminhtml/default/default/cti skin/adminhtml/default/default/cti

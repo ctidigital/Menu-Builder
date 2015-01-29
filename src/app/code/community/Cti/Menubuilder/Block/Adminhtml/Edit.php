@@ -75,4 +75,9 @@ class Cti_Menubuilder_Block_Adminhtml_Edit extends
 
         return parent::_prepareLayout();
     }
+
+    public function getMenuCreator ()
+    {
+        return $this->getChildHtml('cti_menubuilder.edit.menu');
+    }
 }

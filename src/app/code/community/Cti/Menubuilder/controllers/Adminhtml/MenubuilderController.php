@@ -147,4 +147,30 @@ class Cti_Menubuilder_Adminhtml_MenubuilderController extends
         }
         $this->_redirect('*/*');
     }
+
+    public function getMenuItemsAction ()
+    {
+        $json = array(
+            array(
+                'label' => 'Home Page',
+                'id'    => '1',
+            ),
+            array(
+                'label' => 'Categories',
+                'id'    => '2',
+                'children'  => array(
+                    array(
+                        'label' => 'Computers',
+                        'id'    => '3',
+                    ),
+                    array(
+                        'label' => 'MP3s',
+                        'id'    => '4',
+                    )
+                )
+            )
+        );
+
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($json));
+    }
 }

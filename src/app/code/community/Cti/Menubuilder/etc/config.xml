@@ -59,6 +59,9 @@
                     <menu>
                         <table>cti_menubuilder_menu</table>
                     </menu>
+                    <menu_item>
+                        <table>cti_menubuilder_menu_item</table>
+                    </menu_item>
                     <menu_store>
                         <table>cti_menubuilder_menu_store</table>
                     </menu_store>

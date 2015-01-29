@@ -105,6 +105,46 @@ try {
         );
 
     $installer->getConnection()->createTable($table);
+
+    // Create the cti_menubuilder_menu_item table
+    $tableName = $installer->getTable('cti_menubuilder/menu_item');
+
+    // Drop the table if it exists
+    if ($installer->getConnection()->isTableExists($tableName)) {
+        $installer->getConnection()->dropTable($tableName);
+    }
+
+    // Create the table for storing menu items
+    $table = $installer->getConnection()->newTable($tableName)
+        ->addColumn(
+            'item_id',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned'  => true,
+                'nullable'  => false,
+                'primary'   => true,
+                'identity'  => true,
+            ),
+            'Item ID'
+        )->addColumn(
+            'menu_id',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned',
+                'nullable',
+            ),
+            'Menu ID'
+        )->addColumn(
+            'name',
+            Varien_Db_Ddl_Table::TYPE_TEXT,
+            255,
+            array(),
+            'Item Name'
+        );
+
+    $installer->getConnection()->createTable($table);
 } catch (Exception $e) {
     Mage::logException($e);
 }
