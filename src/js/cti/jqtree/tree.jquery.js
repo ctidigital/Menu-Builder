@@ -3027,7 +3027,7 @@ This widget does the same a the mouse widget in jqueryui.
 }).call(this);
 
 },{}],10:[function(require,module,exports){
-(function() {œ
+(function() {
   var SelectNodeHandler;
 
   SelectNodeHandler = (function() {
