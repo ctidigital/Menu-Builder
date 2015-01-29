@@ -120,4 +120,20 @@ class Cti_Menubuilder_Block_Adminhtml_Manage_Grid extends
         $collection->addStoreFilter($value);
         return true;
     }
+
+    /**
+     * Get the row URL. Clicking on this should take the user to the edit page.
+     *
+     * @param $row
+     * @return string
+     */
+    public function getRowUrl ($row)
+    {
+        return $this->getUrl(
+            '*/*/edit',
+            array(
+                'menu_id' => $row->getMenuId(),
+            )
+        );
+    }
 }

@@ -66,7 +66,7 @@ class Cti_Menubuilder_Block_Adminhtml_Edit_Form extends
                 'menu_id',
                 'hidden',
                 array(
-                    'name'    => 'id',
+                    'name'    => 'menu_id',
                 )
             );
         }
@@ -95,7 +95,7 @@ class Cti_Menubuilder_Block_Adminhtml_Edit_Form extends
 
         if (!Mage::app()->isSingleStoreMode()) {
             $fieldset->addField(
-                'store_id',
+                'stores',
                 'multiselect',
                 array(
                     'label' => Mage::helper('cti_menubuilder')->__('Store View'),
@@ -108,7 +108,7 @@ class Cti_Menubuilder_Block_Adminhtml_Edit_Form extends
             );
         } else {
             $fieldset->addField(
-                'store_id',
+                'stores',
                 'hidden',
                 array(
                     'name'  => 'stores',

@@ -35,6 +35,51 @@ class Cti_Menubuilder_Model_Resource_Menu extends
     }
 
     /**
+     * Operations after the object has been saved
+     *
+     * @param Mage_Core_Model_Abstract $object
+     * @return Mage_Core_Model_Resource_Db_Abstract
+     */
+    protected function _afterSave (Mage_Core_Model_Abstract $object)
+    {
+        if ($object->getId()) {
+            // The stores the menu is currently assigned on
+            $oldStores = $this->_lookupStoreIds($object->getMenuId());
+            // The new stores the menu is assigned on
+            $newStores = $object->getStores();
+
+            $table = $this->getTable('cti_menubuilder/menu_store');
+            // Get the new stores the menu can be assigned to
+            $insert = array_diff($newStores, $oldStores);
+            // Get the existing stores that should be deleted
+            $delete = array_diff($oldStores, $newStores);
+
+            if ($delete) {
+                $where = array(
+                    'menu_id = ?'   => (int) $object->getMenuId(),
+                    'store_id IN (?)'   => $delete,
+                );
+
+                $this->_getWriteAdapter()->delete($table, $where);
+            }
+
+            if ($insert) {
+                $data = array();
+
+                foreach ($insert as $storeId) {
+                    $data[] = array(
+                        'menu_id'   => (int) $object->getMenuId(),
+                        'store_id'  => (int) $storeId,
+                    );
+                }
+
+                $this->_getWriteAdapter()->insertMultiple($table, $data);
+            }
+        }
+        return parent::_afterSave($object);
+    }
+
+    /**
      * Operations after the the object has been loaded
      *
      * @param Mage_Core_Model_Abstract $object The menu that is being loaded
