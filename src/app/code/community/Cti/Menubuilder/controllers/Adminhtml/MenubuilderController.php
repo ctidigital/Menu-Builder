@@ -101,6 +101,8 @@ class Cti_Menubuilder_Adminhtml_MenubuilderController extends
 
     /**
      * Save menus
+     *
+     * @return null
      */
     public function saveAction ()
     {
@@ -148,34 +150,24 @@ class Cti_Menubuilder_Adminhtml_MenubuilderController extends
         $this->_redirect('*/*');
     }
 
+    /**
+     * Get the items associated to a menu as JSON
+     *
+     * @return string JSON
+     */
     public function getMenuItemsAction ()
     {
+        $menu = Mage::getModel('cti_menubuilder/menu');
+
+        // If a menu_id was passed, load the menu
         if ($menuId = $this->getRequest()->getParam('menu_id')) {
-            $menu = Mage::getModel('cti_menubuilder/menu')->load($menuId);
+            $menu->load($menuId);
         }
 
+        // Get the menu items as a JSON tree
         $json = Mage::helper('cti_menubuilder')->convertMenuItemsToJson($menu);
-//        $json = array(
-//            array(
-//                'label' => 'Home Page',
-//                'id'    => '1',
-//            ),
-//            array(
-//                'label' => 'Categories',
-//                'id'    => '2',
-//                'children'  => array(
-//                    array(
-//                        'label' => 'Computers',
-//                        'id'    => '3',
-//                    ),
-//                    array(
-//                        'label' => 'MP3s',
-//                        'id'    => '4',
-//                    )
-//                )
-//            )
-//        );
 
+        // Return JSON tree
         $this->getResponse()->setBody($json);
     }
 }

@@ -27,13 +27,26 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
      * Convert a menu's items to JSON
      *
      * @param Cti_Menubuilder_Model_Menu $menu the menu to convert
+     *
+     * @return string JSON
      */
     public function convertMenuItemsToJson (Cti_Menubuilder_Model_Menu $menu)
     {
         return $this->__convertMenuItemsToTree($menu, 'json');
     }
 
-    private function __convertMenuItemsToTree (Cti_Menubuilder_Model_Menu $menu, $return = 'object')
+    /**
+     * Convert a menu's items into a tree format
+     *
+     * @param Cti_Menubuilder_Model_Menu $menu   menu with items to process
+     * @param string                     $return the format to return the item tree
+     *
+     * @return array|string
+     */
+    private function __convertMenuItemsToTree (
+        Cti_Menubuilder_Model_Menu $menu,
+        $return = 'object'
+    )
     {
         $items = $menu->getItems();
         $sortItems = array();
@@ -46,24 +59,41 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                 $tree = Mage::helper('core')->jsonEncode($sortItems);
                 break;
             default:
+                $tree = $sortItems;
                 break;
         }
 
         return $tree;
     }
 
+    /**
+     * Create a tree of items
+     *
+     * Code referenced from http://stackoverflow.com/a/8841921/442326
+     *
+     * @param array $items    the items to loop through
+     * @param int   $parentId the current parent_id to start searching at
+     *
+     * @return array
+     */
     private function __createTree($items, $parentId = 0)
     {
         $itemTree = array();
-
-        foreach ($items as $item) {
-            if ($item['parent_id'] == $parentId) {
-                $itemTree[$parentId][] = array(
-                    'id'    => $item['item_id'],
-                    'label' => $item['name'],
-                    'data'  => $item,
+        // Loop through each item
+        foreach ($items as $arrayKey => $menuItem) {
+            // If the item's parent_id matches the parameter's, start to process it
+            if ($menuItem['parent_id'] == $parentId) {
+                // Check if the item has children
+                $childItems = $this->__createTree($items, $menuItem['item_id']);
+                // Assign the children to the item
+                $menuItem['children'] = $childItems;
+                $itemTree[] = array(
+                    'id'    => $menuItem['item_id'],
+                    'label' => $menuItem['name'],
+                    'children'  => $menuItem['children'],
                 );
-                $itemTree[$parentId][$item['item_id']]['children'] = $this->__createTree($items, $item['item_id']);
+                // Remove the item from the overall list so it isn't processed again
+                unset($items[$arrayKey]);
             }
         }
 
