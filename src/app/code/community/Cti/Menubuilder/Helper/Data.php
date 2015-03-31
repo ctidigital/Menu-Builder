@@ -32,7 +32,7 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function convertMenuItemsToJson (Cti_Menubuilder_Model_Menu $menu)
     {
-        return $this->__convertMenuItemsToTree($menu, 'json');
+        return $this->_convertMenuItemsToTree($menu, 'json');
     }
 
     /**
@@ -43,16 +43,15 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return array|string
      */
-    private function __convertMenuItemsToTree (
+    private function _convertMenuItemsToTree (
         Cti_Menubuilder_Model_Menu $menu,
         $return = 'object'
-    )
-    {
+    ) {
         $items = $menu->getItems();
         $sortItems = array();
         $tree = array();
 
-        $sortItems = $this->__createTree($items);
+        $sortItems = $this->_createTree($items);
 
         switch ($return) {
             case 'json':
@@ -76,7 +75,7 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
      *
      * @return array
      */
-    private function __createTree($items, $parentId = 0)
+    private function _createTree($items, $parentId = 0)
     {
         $itemTree = array();
         // Loop through each item
@@ -84,7 +83,7 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
             // If the item's parent_id matches the parameter's, start to process it
             if ($menuItem['parent_id'] == $parentId) {
                 // Check if the item has children
-                $childItems = $this->__createTree($items, $menuItem['item_id']);
+                $childItems = $this->_createTree($items, $menuItem['item_id']);
                 // Assign the children to the item
                 $menuItem['children'] = $childItems;
                 $itemTree[] = array(
