@@ -169,6 +169,69 @@ try {
                 'nullable'  => false,
             ),
             'Parent ID'
+        )->addForeignKey(
+            $installer->getFkName(
+                'cti_menubuilder/menu_item',
+                'menu_id',
+                'cti_menubuilder/menu',
+                'menu_id'
+            ),
+            'menu_id',
+            $installer->getTable('cti_menubuilder/menu'),
+            'menu_id',
+            Varien_Db_Ddl_Table::ACTION_CASCADE
+        );
+
+    $installer->getConnection()->createTable($table);
+
+    // Create the cti_menubuilder_item_value
+    $tableName = $installer->getTable('cti_menubuilder/item_value');
+
+    //Drop the table if it exists
+    if ($installer->getConnection()->isTableExists($tableName)) {
+        $installer->getConnection()->dropTable($tableName);
+    }
+
+    // Create the table for storing the item values
+    $table = $installer->getConnection()->newTable($tableName)
+        ->addColumn(
+            'id',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned'  => true,
+                'nullable'  => false,
+                'primary'   => true,
+                'identify'  => true,
+            ),
+            'Item Value ID'
+        )->addColumn(
+            'item_id',
+            Varien_Db_Ddl_Table::TYPE_INTEGER,
+            null,
+            array(
+                'unsigned'  => true,
+                'nullable'  => false,
+            )
+        )->addColumn(
+            'value',
+            Varien_Db_Ddl_Table::TYPE_TEXT,
+            '2M',
+            array(
+                'nullable'  => true,
+            ),
+            'Value'
+        )->addForeignKey(
+            $installer->getFkName(
+                'cti_menubuilder/item_value',
+                'item_id',
+                'cti_menubuilder/menu_item',
+                'item_id'
+            ),
+            'item_id',
+            $installer->getTable('cti_menubuilder/menu_item'),
+            'item_id',
+            Varien_Db_Ddl_Table::ACTION_CASCADE
         );
 
     $installer->getConnection()->createTable($table);
