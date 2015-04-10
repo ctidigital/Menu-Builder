@@ -134,7 +134,18 @@ class Cti_Menubuilder_Model_Resource_Menu extends
         $adapter = $this->_getReadAdapter();
 
         $select = $adapter->select()
-            ->from($this->getTable('cti_menubuilder/menu_item'), '*')
+            ->from(
+                array(
+                    'menu_item'  => $this->getTable('cti_menubuilder/menu_item')
+                )
+            )
+            ->joinLeft(
+                array(
+                    'item_value'    => $this->getTable('cti_menubuilder/item_value')
+                ),
+                'item_value.item_id = menu_item.item_id',
+                'value'
+            )
             ->where('menu_id = :menu_id');
 
         $binds = array(

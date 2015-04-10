@@ -90,6 +90,7 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                     'id'    => $menuItem['item_id'],
                     'label' => $menuItem['name'],
                     'children'  => $menuItem['children'],
+                    'value'     => $menuItem['value'],
                 );
                 // Remove the item from the overall list so it isn't processed again
                 unset($items[$arrayKey]);
