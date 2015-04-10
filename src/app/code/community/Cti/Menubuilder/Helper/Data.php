@@ -35,6 +35,13 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
         return $this->_convertMenuItemsToTree($menu, 'json');
     }
 
+    public function convertMenuItemsToArray ($json)
+    {
+        $items = Mage::helper('core')->jsonDecode($json);
+
+        $tree = $this->_createTree($items);
+    }
+
     /**
      * Convert a menu's items into a tree format
      *
@@ -81,8 +88,8 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
         // Loop through each item
         foreach ($items as $arrayKey => $menuItem) {
             // If the item's parent_id matches the parameter's, start to process it
-            if (isset($menuItem['parent_id'])
-                && $menuItem['parent_id'] == $parentId
+            if ((isset($menuItem['parent_id'])
+                && $menuItem['parent_id'] == $parentId)
             ) {
                 if (isset($menuItem['item_id'])) {
                     // Check if the item has children
@@ -90,15 +97,17 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                     // Assign the children to the item
                     $menuItem['children'] = $childItems;
                     $itemTree[] = array(
-                        'id' => $menuItem['item_id'],
-                        'label' => $menuItem['name'],
-                        'children' => $menuItem['children'],
-                        'value' => $menuItem['value'],
+                        'id'        => $menuItem['item_id'],
+                        'item_id'   => $menuItem['item_id'],
+                        'parent_id' => $menuItem['parent_id'],
+                        'label'     => $menuItem['name'],
+                        'children'  => $menuItem['children'],
+                        'value'     => $menuItem['value'],
                     );
                 }
-                // Remove the item from the overall list so it isn't processed again
-                unset($items[$arrayKey]);
             }
+            // Remove the item from the overall list so it isn't processed again
+            unset($items[$arrayKey]);
         }
 
         return $itemTree;

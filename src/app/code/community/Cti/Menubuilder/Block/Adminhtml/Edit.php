@@ -34,6 +34,8 @@ class Cti_Menubuilder_Block_Adminhtml_Edit extends
         $this->_controller = 'adminhtml';
 
         parent::__construct();
+
+        $this->_updateButton('save', 'onclick', 'saveMenu()');
     }
 
     /**
