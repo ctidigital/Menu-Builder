@@ -202,7 +202,7 @@ try {
                 'unsigned'  => true,
                 'nullable'  => false,
                 'primary'   => true,
-                'identify'  => true,
+                'identity'  => true,
             ),
             'Item Value ID'
         )->addColumn(
