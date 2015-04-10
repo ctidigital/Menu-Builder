@@ -17,15 +17,14 @@
  */
 ?>
 
+<button id="add_menu_item" class="scalable add" type="button" title="Add Item">
+    <span>
+        <span>
+            <span><?php echo $this->__('Add Item') ?></span>
+        </span>
+    </span>
+</button>
+
 <div id="menubuilder_tree" data-url="<?php echo $this->getItemJsonUrl() ?>">
 
 </div>
-
-<script type="text/javascript">
-    jQuery(function() {
-       jQuery('#menubuilder_tree').tree({
-           dragAndDrop: true,
-           autoOpen: 0
-       });
-    });
-</script>
