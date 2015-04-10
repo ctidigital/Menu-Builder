@@ -81,17 +81,21 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
         // Loop through each item
         foreach ($items as $arrayKey => $menuItem) {
             // If the item's parent_id matches the parameter's, start to process it
-            if ($menuItem['parent_id'] == $parentId) {
-                // Check if the item has children
-                $childItems = $this->_createTree($items, $menuItem['item_id']);
-                // Assign the children to the item
-                $menuItem['children'] = $childItems;
-                $itemTree[] = array(
-                    'id'    => $menuItem['item_id'],
-                    'label' => $menuItem['name'],
-                    'children'  => $menuItem['children'],
-                    'value'     => $menuItem['value'],
-                );
+            if (isset($menuItem['parent_id'])
+                && $menuItem['parent_id'] == $parentId
+            ) {
+                if (isset($menuItem['item_id'])) {
+                    // Check if the item has children
+                    $childItems = $this->_createTree($items, $menuItem['item_id']);
+                    // Assign the children to the item
+                    $menuItem['children'] = $childItems;
+                    $itemTree[] = array(
+                        'id' => $menuItem['item_id'],
+                        'label' => $menuItem['name'],
+                        'children' => $menuItem['children'],
+                        'value' => $menuItem['value'],
+                    );
+                }
                 // Remove the item from the overall list so it isn't processed again
                 unset($items[$arrayKey]);
             }
