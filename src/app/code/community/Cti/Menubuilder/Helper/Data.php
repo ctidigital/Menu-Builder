@@ -96,14 +96,20 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                     $childItems = $this->_createTree($items, $menuItem['item_id']);
                     // Assign the children to the item
                     $menuItem['children'] = $childItems;
-                    $itemTree[] = array(
+                    $nodeItem = array(
                         'id'        => $menuItem['item_id'],
                         'item_id'   => $menuItem['item_id'],
                         'parent_id' => $menuItem['parent_id'],
                         'label'     => $menuItem['name'],
-                        'children'  => $menuItem['children'],
-                        'value'     => $menuItem['value'],
+                        'children'  => $menuItem['children']
                     );
+                    // Assign any other values to the item tree
+                    foreach ($menuItem as $itemKey => $value) {
+                        if (!in_array($itemKey, array_keys($nodeItem))) {
+                            $tempItem[$itemKey] = $value;
+                        }
+                    }
+                    $itemTree[] = $nodeItem;
                 }
             }
             // Remove the item from the overall list so it isn't processed again

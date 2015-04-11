@@ -95,7 +95,8 @@ class Cti_Menubuilder_Model_Resource_Menu extends
 
             // Get the item IDs that are associated to the menu
             $items = $this->_lookupItems($object->getMenuId());
-            $object->setData('items', $items);
+            $itemValues = $this->_lookupItemValues($items);
+            $object->setData('items', $itemValues);
         }
         return parent::_afterLoad($object);
     }
@@ -139,13 +140,6 @@ class Cti_Menubuilder_Model_Resource_Menu extends
                     'menu_item'  => $this->getTable('cti_menubuilder/menu_item')
                 )
             )
-            ->joinLeft(
-                array(
-                    'item_value'    => $this->getTable('cti_menubuilder/item_value')
-                ),
-                'item_value.item_id = menu_item.item_id',
-                'value'
-            )
             ->where('menu_id = :menu_id');
 
         $binds = array(
@@ -153,5 +147,45 @@ class Cti_Menubuilder_Model_Resource_Menu extends
         );
 
         return $adapter->fetchAll($select, $binds);
+    }
+
+    /**
+     * Look up an item's value and assign them to the array
+     *
+     * @param array $items the items to get values with
+     *
+     * @return array
+     */
+    private function _lookupItemValues ($items)
+    {
+        $adapter = $this->_getReadAdapter();
+
+        $itemValues = array();
+
+        // Get the item IDs and use them as the index
+        foreach ($items as $item) {
+            $itemValues[$item['item_id']] = $item;
+        }
+
+        $select = $adapter->select()
+            ->from(
+                array(
+                    'item_value'    =>
+                        $this->getTable('cti_menubuilder/item_value')
+                ),
+                array('item_id','field', 'value')
+            )->where(
+                'item_id IN (?)',
+                array_keys($itemValues)
+            );
+
+        $results = $adapter->fetchAll($select);
+
+        // Loop through the results and associate the value to the item
+        foreach ($results as $value) {
+            $itemValues[$value['item_id']][$value['field']] = $value['value'];
+        }
+
+        return $itemValues;
     }
 }

@@ -214,6 +214,15 @@ try {
                 'nullable'  => false,
             )
         )->addColumn(
+            'field',
+            Varien_Db_Ddl_Table::TYPE_VARCHAR,
+            '255',
+            array(
+                'nullable'  => true,
+            ),
+            'Field'
+        )
+        ->addColumn(
             'value',
             Varien_Db_Ddl_Table::TYPE_TEXT,
             '2M',
