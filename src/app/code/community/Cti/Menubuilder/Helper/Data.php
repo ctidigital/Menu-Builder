@@ -39,7 +39,29 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $items = Mage::helper('core')->jsonDecode($json);
 
-        $tree = $this->_createTree($items);
+        $tree = $this->_flattenItemTree($items);
+
+        return $tree;
+    }
+
+    private function _flattenItemTree ($items)
+    {
+        $itemTree = array();
+
+        foreach ($items as $item) {
+            if (isset($item['children'])) {
+                $children = $this->_flattenItemTree($item['children']);
+                unset($item['children']);
+                $itemTree[] = $item;
+                foreach ($children as $child) {
+                    $itemTree[] = $child;
+                }
+            } else {
+                $itemTree[] = $item;
+            }
+        }
+
+        return $itemTree;
     }
 
     /**

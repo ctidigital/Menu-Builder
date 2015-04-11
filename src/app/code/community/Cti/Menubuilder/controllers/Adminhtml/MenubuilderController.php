@@ -116,8 +116,10 @@ class Cti_Menubuilder_Adminhtml_MenubuilderController extends
                 unset($data['menu_id']);
             }
 
-//            $items = Mage::helper('cti_menubuilder')
-//                ->convertMenuItemsToArray($data['menu_tree']);
+            $items = Mage::helper('cti_menubuilder')
+                ->convertMenuItemsToArray($data['menu_tree']);
+
+            $data['items'] = $items;
 
             // Set the menu data with the values from the form
             $menu->setData($data);
