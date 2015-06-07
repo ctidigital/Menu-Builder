@@ -37,20 +37,24 @@ jQuery('document').ready(function() {
             label: 'New Item'
         };
         jQuery.extend(itemData, fields);
+        if (itemData.label.length == 0) {
+            itemData.label = 'New Item';
+        }
         // Add a new node
         var newMenuItem = menuTree.tree(
             'appendNode',
             itemData,
             selected
         );
-        var parentNodeId = (selected !== false) ? selected : 0;
+        var parentNodeId = (selected !== false) ? selected.id : 0;
         menuTree.tree(
             'updateNode',
             newMenuItem,
             {
-                parent_id: parentNodeId.id
+                parent_id: parentNodeId
             }
-        )
+        );
+        menuTree.tree('selectNode', newMenuItem);
     });
 
     /**
@@ -74,7 +78,7 @@ jQuery('document').ready(function() {
     function showFieldForm (node)
     {
         // Get the fields
-        var fields = jQuery('#cti_menubuilder_form_fields').find('input');
+        var fields = jQuery('#cti_menubuilder_form_fields').find('input,select');
         // Add the node's value to the form field
         fields.each(function (item) {
             var name = jQuery(this).attr('name');
@@ -125,9 +129,14 @@ function getFields ()
     var fieldData = [];
 
     if (menuFields.length > 0) {
-        menuFields.find('input').each(function(element) {
+        menuFields.find('input').each(function() {
             var name = jQuery(this).attr('name');
             var inputValue = jQuery(this).val();
+            fieldData[name] = inputValue;
+        });
+        menuFields.find('select').each(function() {
+            var name = jQuery(this).attr('name');
+            var inputValue = jQuery(this).find(':selected').val();
             fieldData[name] = inputValue;
         });
     }
@@ -143,8 +152,8 @@ function clearFields ()
     var menuFields = jQuery('#cti_menubuilder_form_fields');
 
     if (menuFields.length > 0) {
-        menuFields.find('input').each(function(element) {
-            jQuery(this).attr('value', '');
+        menuFields.find('input,select').each(function(element) {
+            jQuery(this).val('');
         });
     }
 }
