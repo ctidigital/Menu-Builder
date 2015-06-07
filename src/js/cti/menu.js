@@ -19,14 +19,17 @@ jQuery('document').ready(function() {
     jQuery('#add_menu_item').click(function () {
         // Get the selected menu item
         var selected = menuTree.tree('getSelectedNode');
+        var fields = getFields();
+        var itemData = {
+            label: 'New Item'
+        };
+        jQuery.extend(itemData, fields);
         // Add a new node
         var newMenuItem = menuTree.tree(
             'appendNode',
-            {
-                label: 'New Item'
-            },
+            itemData,
             selected
-        )
+        );
         var parentNodeId = (selected !== false) ? selected : 0;
         menuTree.tree(
             'updateNode',
@@ -36,6 +39,27 @@ jQuery('document').ready(function() {
             }
         )
     });
+
+    /**
+     * Gets the menu fields from the form so they can be added to the tree
+     *
+     * @returns {Array}
+     */
+    function getFields ()
+    {
+        var menuFields = jQuery('#cti_menubuilder_form_fields');
+        var fieldData = [];
+
+        if (menuFields.length > 0) {
+            menuFields.find('input').each(function(element) {
+                var name = jQuery(this).attr('name');
+                var inputValue = jQuery(this).val();
+                fieldData[name] = inputValue;
+            });
+        }
+
+        return fieldData;
+    }
 });
 
 function saveMenu()
