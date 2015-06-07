@@ -9,6 +9,17 @@ jQuery('document').ready(function() {
                 dragAndDrop: true,
                 autoOpen: 0
             });
+
+            menuTree.bind(
+                'tree.select',
+                function (event) {
+                    if (event.node) {
+                        showFieldForm(event.node);
+                    } else {
+                        hideFieldForm();
+                    }
+                }
+            );
         }
     });
 
@@ -17,6 +28,8 @@ jQuery('document').ready(function() {
      * added as a child node of that item.
      */
     jQuery('#add_menu_item').click(function () {
+        //Clear the form fields
+        clearFields();
         // Get the selected menu item
         var selected = menuTree.tree('getSelectedNode');
         var fields = getFields();
@@ -41,24 +54,44 @@ jQuery('document').ready(function() {
     });
 
     /**
-     * Gets the menu fields from the form so they can be added to the tree
-     *
-     * @returns {Array}
+     * Updates a menu item using the values from the form
      */
-    function getFields ()
+    jQuery('#save_menu_item').click(function () {
+        var selected = menuTree.tree('getSelectedNode');
+        var fields = getFields();
+        menuTree.tree(
+            'updateNode',
+            selected,
+            fields
+        );
+    });
+
+    /**
+     * Displays the field form and adds the node's values to it
+     *
+     * @param node
+     */
+    function showFieldForm (node)
     {
-        var menuFields = jQuery('#cti_menubuilder_form_fields');
-        var fieldData = [];
+        // Get the fields
+        var fields = jQuery('#cti_menubuilder_form_fields').find('input');
+        // Add the node's value to the form field
+        fields.each(function (item) {
+            var name = jQuery(this).attr('name');
+            if (node[name] !== undefined) {
+                // Set the value of the input to the value of the node
+                jQuery(this).val(node[name]);
+            }
+        });
+        jQuery('#cti_menubuilder_fields').removeClass('visibly-hidden');
+    }
 
-        if (menuFields.length > 0) {
-            menuFields.find('input').each(function(element) {
-                var name = jQuery(this).attr('name');
-                var inputValue = jQuery(this).val();
-                fieldData[name] = inputValue;
-            });
-        }
-
-        return fieldData;
+    /**
+     * Hides the field form
+     */
+    function hideFieldForm ()
+    {
+        jQuery('#cti_menubuilder_fields').addClass('visibly-hidden');
     }
 });
 
@@ -79,4 +112,39 @@ function saveMenu()
     }
 
     editForm.submit();
+}
+
+/**
+ * Gets the menu fields from the form so they can be added to the tree
+ *
+ * @returns {Array}
+ */
+function getFields ()
+{
+    var menuFields = jQuery('#cti_menubuilder_form_fields');
+    var fieldData = [];
+
+    if (menuFields.length > 0) {
+        menuFields.find('input').each(function(element) {
+            var name = jQuery(this).attr('name');
+            var inputValue = jQuery(this).val();
+            fieldData[name] = inputValue;
+        });
+    }
+
+    return fieldData;
+}
+
+/**
+ * Clears the menu fields
+ */
+function clearFields ()
+{
+    var menuFields = jQuery('#cti_menubuilder_form_fields');
+
+    if (menuFields.length > 0) {
+        menuFields.find('input').each(function(element) {
+            jQuery(this).attr('value', '');
+        });
+    }
 }

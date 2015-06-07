@@ -122,6 +122,7 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                     $childItems = $this->_createTree($items, $menuItem['item_id']);
                     // Assign the children to the item
                     $menuItem['children'] = $childItems;
+                    // Set the values used by JQTree
                     $nodeItem = array(
                         'id'        => $menuItem['item_id'],
                         'item_id'   => $menuItem['item_id'],
@@ -129,6 +130,15 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                         'label'     => $menuItem['name'],
                         'children'  => $menuItem['children']
                     );
+                    // Get the fields for the menu and add them to the item
+                    $fields = $this->getMenuFields();
+                    foreach ($fields as $fieldName => $fieldValues) {
+                        if (isset($menuItem[$fieldName])) {
+                            $nodeItem[$fieldName] = $menuItem[$fieldName];
+                        } else {
+                            $nodeItem[$fieldName] = '';
+                        }
+                    }
                     // Assign any other values to the item tree
                     foreach ($menuItem as $itemKey => $value) {
                         if (!in_array($itemKey, array_keys($nodeItem))) {
