@@ -140,4 +140,16 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $itemTree;
     }
+
+    /**
+     * Gets the fields used when adding a new menu item
+     *
+     * @return array|string
+     */
+    public function getMenuFields ()
+    {
+        $fields = Mage::app()->getConfig()->getNode('cti_menubuilder/fields');
+
+        return $fields->asArray();
+    }
 }

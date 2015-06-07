@@ -90,4 +90,17 @@
             </cti_menubuilder_setup>
         </resources>
     </global>
+    <cti_menubuilder>
+        <fields>
+            <name>
+                <type>text</type>
+                <label>Name</label>
+            </name>
+            <title>
+                <type>text</type>
+                <label>Title</label>
+                <required>1</required>
+            </title>
+        </fields>
+    </cti_menubuilder>
 </config>

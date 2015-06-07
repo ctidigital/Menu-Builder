@@ -85,4 +85,9 @@ class Cti_Menubuilder_Block_Adminhtml_Edit extends
         }
         return false;
     }
+
+    public function getMenuFields ()
+    {
+        return $this->getChildHtml('cti_menubuilder.edit.fields');
+    }
 }

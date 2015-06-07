@@ -31,6 +31,7 @@
             <block type="cti_menubuilder/adminhtml_edit" name="cti_menubuilder.edit">
                 <action method="setTemplate"><template>cti/cti_menubuilder/widget/form/container.phtml</template></action>
                 <block type="cti_menubuilder/adminhtml_edit_menu" name="cti_menubuilder.edit.menu" template="cti/cti_menubuilder/widget/form/menu.phtml" />
+                <block type="cti_menubuilder/adminhtml_edit_fields" name="cti_menubuilder.edit.fields" template="cti/cti_Menubuilder/widget/form/fields.phtml" />
             </block>
         </reference>
     </adminhtml_menubuilder_edit>
