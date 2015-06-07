@@ -25,6 +25,7 @@
             <action method="addJs"><script>cti/jquery/jquery.cookie-1.4.1.min.js</script></action>
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
             <action method="addJs"><script>cti/menu.js</script></action>
+            <action method="addCss"><stylesheet>cti/cti_menubuilder/css/menubuilder.css</stylesheet></action>
             <action method="addCss"><stylesheet>cti/cti_menubuilder/css/jqtree.css</stylesheet></action>
         </reference>
         <reference name="content">

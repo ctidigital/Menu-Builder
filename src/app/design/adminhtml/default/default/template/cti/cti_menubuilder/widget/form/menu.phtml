@@ -17,14 +17,16 @@
  */
 ?>
 
-<button id="add_menu_item" class="scalable add" type="button" title="Add Item">
-    <span>
+<div class="cti_menubuilder_panel_left">
+    <button id="add_menu_item" class="scalable add" type="button" title="Add Item">
         <span>
-            <span><?php echo $this->__('Add Item') ?></span>
+            <span>
+                <span><?php echo $this->__('Add Item') ?></span>
+            </span>
         </span>
-    </span>
-</button>
+    </button>
 
-<div id="menubuilder_tree" data-url="<?php echo $this->getItemJsonUrl() ?>">
+    <div id="menubuilder_tree" data-url="<?php echo $this->getItemJsonUrl() ?>">
 
+    </div>
 </div>
