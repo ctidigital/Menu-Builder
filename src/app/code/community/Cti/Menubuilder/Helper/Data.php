@@ -48,6 +48,10 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $itemTree = array();
 
+        if (empty($items)) {
+            return $itemTree;
+        }
+
         foreach ($items as $item) {
             if (isset($item['children'])) {
                 $children = $this->_flattenItemTree($item['children']);
