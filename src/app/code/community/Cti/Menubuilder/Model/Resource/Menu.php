@@ -46,7 +46,15 @@ class Cti_Menubuilder_Model_Resource_Menu extends
             // The stores the menu is currently assigned on
             $oldStores = $this->_lookupStoreIds($object->getMenuId());
             // The new stores the menu is assigned on
-            $newStores = $object->getStores();
+            $newStores = array();
+            // If stores have been specified
+            if ($object->getStores()) {
+                if (is_array($object->getStores())) {
+                    $newStores = $object->getStores();
+                } else {
+                    $newStores[] = $object->getStores();
+                }
+            }
 
             $table = $this->getTable('cti_menubuilder/menu_store');
             // Get the new stores the menu can be assigned to

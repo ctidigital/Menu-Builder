@@ -115,6 +115,7 @@ class Cti_Menubuilder_Block_Adminhtml_Edit_Form extends
                     'value' => Mage::app()->getStore(true)->getId(),
                 )
             );
+            $menu->setStores(Mage::app()->getStore(true)->getId());
         }
 
         $form->setValues($menu->getData());
