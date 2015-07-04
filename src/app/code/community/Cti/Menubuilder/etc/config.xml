@@ -90,6 +90,15 @@
             </cti_menubuilder_setup>
         </resources>
     </global>
+    <frontend>
+        <layout>
+            <updates>
+                <cti_menubuilder>
+                    <file>cti/cti_menubuilder.xml</file>
+                </cti_menubuilder>
+            </updates>
+        </layout>
+    </frontend>
     <cti_menubuilder>
         <fields>
             <title>

@@ -35,6 +35,18 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
         return $this->_convertMenuItemsToTree($menu, 'json');
     }
 
+    /**
+     * Convert a menu's item to an object
+     *
+     * @param Cti_Menubuilder_Model_Menu $menu
+     *
+     * @return array|string
+     */
+    public function convertMenuItemsToTree (Cti_Menubuilder_Model_Menu $menu)
+    {
+        return $this->_convertMenuItemsToTree($menu);
+    }
+
     public function convertMenuItemsToArray ($json)
     {
         $items = Mage::helper('core')->jsonDecode($json);
@@ -142,7 +154,7 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
                     // Assign any other values to the item tree
                     foreach ($menuItem as $itemKey => $value) {
                         if (!in_array($itemKey, array_keys($nodeItem))) {
-                            $tempItem[$itemKey] = $value;
+                            $nodeItem[$itemKey] = $value;
                         }
                     }
                     $itemTree[] = $nodeItem;
@@ -165,5 +177,24 @@ class Cti_Menubuilder_Helper_Data extends Mage_Core_Helper_Abstract
         $fields = Mage::app()->getConfig()->getNode('cti_menubuilder/fields');
 
         return $fields->asArray();
+    }
+
+    public function getLinkUrl ($item)
+    {
+        $url = '';
+        if (isset($item['link_type'])) {
+            switch ($item['link_type']) {
+                case 'standard':
+                    $url = $this->_generateStandardUrl($item['link']);
+                    break;
+            }
+        }
+        return $url;
+    }
+
+    private function _generateStandardUrl ($url)
+    {
+        $url = preg_replace('/^\//', '', $url);
+        return Mage::getUrl($url);
     }
 }

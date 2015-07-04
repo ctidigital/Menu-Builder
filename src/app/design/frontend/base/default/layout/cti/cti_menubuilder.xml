@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+* PHP Version 5
+*
+* @category  Cti
+* @package   Cti_Menubuilder
+* @author    Paul Partington <p.partington@ctidigital.com>
+* @copyright 2015 CTI Digital (http://www.ctidigital.com)
+* @license   http://opensource.org/licenses/MIT The MIT License (MIT)
+* @link      http://www.ctidigital.com
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="top.menu">
+            <action method="unsetChild"><name>catalog.topnav</name></action>
+            <block type="cti_menubuilder/menu" name="menubuilder.menu" template="cti/cti_menubuilder/menu.phtml">
+                <action method="setIdentifier"><identifier>main</identifier></action>
+            </block>
+        </reference>
+    </default>
+</layout>

@@ -1,0 +1,20 @@
+<?php
+/**
+ * PHP Version 5
+ *
+ * @category  Cti
+ * @package   Cti_Menubuilder
+ * @author    Paul Partington <p.partington@ctidigital.com>
+ * @copyright 2015 CTI Digital (http://www.ctidigital.com)
+ * @license   http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link      http://www.ctidigital.com
+ */
+$_menu = $this->getMenu();
+?>
+<?php if ($_menu) : ?>
+    <nav id="nav">
+        <ol class="nav-primary">
+            <?php echo $_menu; ?>
+        </ol>
+    </nav>
+<?php endif; ?>
